@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 10
 # endif
 
 # include <unistd.h>
@@ -24,10 +24,9 @@ char	*get_next_line(int fd);
 char	*ft_read_file(int fd, char *keep);
 char	*ft_extract_line(char *keep);
 char	*ft_delete_read(char *keep);
-void	ft_get_strncpy(char *dst, const char *src, int n);
-size_t	ft_get_strlen(const char *s);
-char	*ft_get_strchr(const char *s, int c);
-char	*ft_strdup(const char *s1);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 
 #endif
