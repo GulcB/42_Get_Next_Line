@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:32:56 by gbodur            #+#    #+#             */
-/*   Updated: 2024/11/20 17:25:52 by gbodur           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:51:27 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	*ft_read_file(int fd, char *keep)
 			return (free(temp), free(keep), NULL);
 		temp[rd] = '\0';
 		keep = ft_strjoin(keep, temp);
-		if (!keep)
-			return (free(temp), NULL);
 	}
 	return (free(temp), keep);
 }
@@ -38,18 +36,27 @@ char	*ft_extract_line(char *keep)
 {
 	char	*line;
 	int		i;
-	size_t	len;
 
 	i = 0;
-	if (!keep)
+	if (!keep[i])
 		return (NULL);
-	while (keep[i] && keep[i] != '\n')
+	while (keep[i] != '\0' && keep[i] != '\n')
 		i++;
+	line = (char *)malloc(sizeof(char) * i + 2);
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (keep[i] != '\n' && keep[i] != '\0')
+	{
+		line[i] = keep[i];
+		i++;
+	}	
 	if (keep[i] == '\n')
-		len = i + 1;
-	else
-		len = i;
-	line = ft_substr(keep, 0, len);
+	{
+		line[i] = keep[i];
+		i++;
+	}
+	line[i] = '\0';
 	return (line);
 }
 
@@ -57,14 +64,24 @@ char	*ft_delete_read(char *keep)
 {
 	char	*rtn;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (keep && keep[i] && keep[i] != '\n')
+	j = 0;
+	while (keep[i] != '\0' && keep[i] != '\n')
 		i++;
-	if (!keep || keep[i] == '\0')
+	if (!keep[i])
 		return (free(keep), NULL);
+	rtn = malloc(sizeof(char) * (ft_strlen(keep) - i));
+	if (!rtn)
+		return (NULL);
 	i++;
-	rtn = ft_substr(keep, i, ft_strlen(keep) - i);
+	while (keep[i + j] != '\0')
+	{
+		rtn[j] = keep[j + i];
+		j++;
+	}
+	rtn[j] = '\0';
 	return (free(keep), rtn);
 }
 
@@ -73,7 +90,7 @@ char	*get_next_line(int fd)
 	static char	*keep[MAX_FD];
 	char		*line;
 
-	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	keep[fd] = ft_read_file(fd, keep[fd]);
 	if (!keep[fd])

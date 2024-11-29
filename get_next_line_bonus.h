@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:33:01 by gbodur            #+#    #+#             */
-/*   Updated: 2024/11/20 17:28:59 by gbodur           ###   ########.fr       */
+/*   Updated: 2024/11/29 17:02:15 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@
 # include <stdlib.h>    
 # include <fcntl.h>
 
-
 char	*get_next_line(int fd);
 char	*ft_read_file(int fd, char *keep);
 char	*ft_extract_line(char *keep);
 char	*ft_delete_read(char *keep);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
